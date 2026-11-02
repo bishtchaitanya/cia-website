@@ -1,0 +1,88 @@
+/* ── Footer (one screen, Lenis-style statement) ────────────────────── */
+.footer__inner {
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 48px;
+  padding-block: calc(var(--nav-h) + 64px) 28px;
+}
+.footer__top {
+  display: grid;
+  gap: 24px;
+}
+.footer__title {
+  font-size: clamp(64px, 11.5vw, 220px);
+}
+.footer__mask {
+  display: block;
+  overflow: clip;
+  padding-block: 0.05em 0.02em;
+}
+.footer__mask--end {
+  text-align: right;
+  color: var(--accent);
+}
+.footer__line {
+  display: inline-block;
+}
+.footer__bottom {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 24px;
+  align-items: end;
+}
+.footer__text {
+  grid-column: 1 / span 5;
+  font-size: clamp(18px, 0.7vw + 13px, 24px);
+  line-height: 1.45;
+}
+.footer__actions {
+  grid-column: 8 / span 5;
+  display: grid;
+  justify-items: end;
+  gap: 16px;
+}
+.footer__chat {
+  color: var(--muted);
+}
+.footer__chat strong {
+  color: var(--fg);
+  font-weight: 600;
+}
+.footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--muted);
+}
+.footer__top-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--fg);
+  font-weight: 600;
+}
+.footer__top-link svg {
+  width: 16px;
+  height: 16px;
+}
+@media (max-width: 899px) {
+  .footer__bottom {
+    grid-template-columns: 1fr;
+  }
+  .footer__text,
+  .footer__actions {
+    grid-column: 1 / -1;
+  }
+  .footer__actions {
+    justify-items: start;
+  }
+  .footer__mask--end {
+    text-align: left;
+  }
+}

@@ -1,0 +1,158 @@
+/*
+ * Design tokens. Three themes (light, dark, brand) switch page-wide as sections
+ * scroll past the middle of the screen; registered colors let them crossfade.
+ */
+
+@property --bg { syntax: '<color>'; inherits: true; initial-value: #f7f4f2; }
+@property --fg { syntax: '<color>'; inherits: true; initial-value: #000000; }
+@property --muted { syntax: '<color>'; inherits: true; initial-value: #555555; }
+@property --accent { syntax: '<color>'; inherits: true; initial-value: #1414d2; }
+@property --on-accent { syntax: '<color>'; inherits: true; initial-value: #ffffff; }
+@property --line { syntax: '<color>'; inherits: true; initial-value: rgba(0, 0, 0, 0.12); }
+@property --line-strong { syntax: '<color>'; inherits: true; initial-value: #878787; }
+@property --grid-major { syntax: '<color>'; inherits: true; initial-value: rgba(0, 0, 0, 0.07); }
+@property --grid-minor { syntax: '<color>'; inherits: true; initial-value: rgba(0, 0, 0, 0.035); }
+@property --surface { syntax: '<color>'; inherits: true; initial-value: #ffffff; }
+@property --surface-line { syntax: '<color>'; inherits: true; initial-value: rgba(0, 0, 0, 0.08); }
+@property --glass { syntax: '<color>'; inherits: true; initial-value: rgba(247, 244, 242, 0.72); }
+
+:root {
+  /* Brand palette (hex values from the brand sheet) */
+  --united-blue: #1414d2;
+  --dark-blue: #051464;
+  --light-tonal-gray: #f7f4f2;
+  --medium-tonal-gray: #d7d7d4;
+  --dark-tonal-gray: #b7b7b7;
+  --dark-gray: #242424;
+  --medium-gray: #555555;
+  --light-gray: #878787;
+  --light-blue: #a5ebff;
+  --medium-blue: #276ef1;
+  --medium-yellow: #ffdc8c;
+
+  /* Type: Neue Plak when its files are added (public/fonts), otherwise the fallbacks */
+  --font-display: 'Neue Plak Condensed', 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --font-text: 'Neue Plak', 'Jost Variable', 'Jost', 'Futura', 'Century Gothic', system-ui, sans-serif;
+  --display-weight: 800;
+
+  /* Motion (Lenis + Team USA curves) */
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-deck: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-ui: cubic-bezier(0.4, 1, 0.7, 1);
+  --dur-hover: 0.6s;
+  --dur-reveal: 1.2s;
+  --dur-theme: 0.6s;
+
+  /* Layout */
+  --max: 1440px;
+  --gutter: clamp(16px, 4vw, 60px);
+  --nav-h: 64px;
+  --radius-card: 24px;
+  --radius-btn: 12px;
+  --radius-media: 8px;
+  --shadow-lift: 0 1px 2px rgba(5, 20, 100, 0.06), 0 6px 12px rgba(5, 20, 100, 0.06),
+    0 18px 36px rgba(5, 20, 100, 0.08), 0 36px 72px rgba(5, 20, 100, 0.08);
+
+  /* Sub-team fills (theme-independent) */
+  --tint-brand: #1414d2;
+  --tint-blue: #a5ebff;
+  --tint-red: #ffe6dc;
+  --tint-purple: #d7d2ff;
+  --tint-yellow: #fff0d7;
+  --tint-burgundy: #fadce1;
+  --tint-green: #dcfae6;
+}
+
+/* ── Light: Light Tonal Gray background ───────────────────────────── */
+:root,
+[data-surface='light'],
+:root:not(.js) [data-theme='light'] {
+  --bg: #f7f4f2;
+  --fg: #000000;
+  --muted: #555555;
+  --accent: #1414d2;
+  --on-accent: #ffffff;
+  --line: rgba(0, 0, 0, 0.12);
+  --line-strong: #878787;
+  --grid-major: rgba(0, 0, 0, 0.07);
+  --grid-minor: rgba(0, 0, 0, 0.035);
+  --surface: #ffffff;
+  --surface-line: rgba(0, 0, 0, 0.08);
+  --glass: rgba(247, 244, 242, 0.72);
+  --hl-bg: #a5ebff;
+  --hl-fg: #051464;
+  --mark-brand: #1414d2;
+  --mark-blue: #276ef1;
+  --mark-red: #ff4b4b;
+  --mark-purple: #695fe6;
+  --mark-yellow: #696e28;
+  --mark-burgundy: #7d283c;
+  --mark-green: #2d4637;
+}
+
+/* ── Dark: Dark Blue background ───────────────────────────────────── */
+:root[data-theme='dark'],
+[data-surface='dark'],
+:root:not(.js) [data-theme='dark'] {
+  --bg: #051464;
+  --fg: #ffffff;
+  --muted: rgba(255, 255, 255, 0.72);
+  --accent: #a5ebff;
+  --on-accent: #051464;
+  --line: rgba(255, 255, 255, 0.16);
+  --line-strong: rgba(255, 255, 255, 0.45);
+  --grid-major: rgba(255, 255, 255, 0.08);
+  --grid-minor: rgba(255, 255, 255, 0.035);
+  --surface: rgba(255, 255, 255, 0.06);
+  --surface-line: rgba(255, 255, 255, 0.14);
+  --glass: rgba(5, 20, 100, 0.62);
+  --hl-bg: #ffdc8c;
+  --hl-fg: #051464;
+  --mark-brand: #a5ebff;
+  --mark-blue: #276ef1;
+  --mark-red: #ff4b4b;
+  --mark-purple: #695fe6;
+  --mark-yellow: #ffdc8c;
+  --mark-burgundy: #d7aaaa;
+  --mark-green: #5ad28c;
+}
+
+/* ── Brand: United Blue background (no sub-team colors here) ─────── */
+:root[data-theme='brand'],
+[data-surface='brand'],
+:root:not(.js) [data-theme='brand'] {
+  --bg: #1414d2;
+  --fg: #ffffff;
+  --muted: rgba(255, 255, 255, 0.75);
+  --accent: #a5ebff;
+  --on-accent: #051464;
+  --line: rgba(255, 255, 255, 0.22);
+  --line-strong: rgba(255, 255, 255, 0.5);
+  --grid-major: rgba(255, 255, 255, 0.09);
+  --grid-minor: rgba(255, 255, 255, 0.04);
+  --surface: rgba(255, 255, 255, 0.08);
+  --surface-line: rgba(255, 255, 255, 0.2);
+  --glass: rgba(20, 20, 210, 0.62);
+  --hl-bg: #ffdc8c;
+  --hl-fg: #051464;
+}
+
+/* Sub-team identity: mark follows the theme, tint/ink are fixed pairs (>= 4.5:1). */
+[data-color='brand'] { --mark: var(--mark-brand); --tint: var(--tint-brand); --ink: #ffffff; }
+[data-color='blue'] { --mark: var(--mark-blue); --tint: var(--tint-blue); --ink: #051464; }
+[data-color='red'] { --mark: var(--mark-red); --tint: var(--tint-red); --ink: #242424; }
+[data-color='purple'] { --mark: var(--mark-purple); --tint: var(--tint-purple); --ink: #551e5f; }
+[data-color='yellow'] { --mark: var(--mark-yellow); --tint: var(--tint-yellow); --ink: #696e28; }
+[data-color='burgundy'] { --mark: var(--mark-burgundy); --tint: var(--tint-burgundy); --ink: #7d283c; }
+[data-color='green'] { --mark: var(--mark-green); --tint: var(--tint-green); --ink: #2d4637; }
+
+/* Page-wide theme crossfade (only when JS drives the theme) */
+html.js {
+  transition-property: --bg, --fg, --muted, --accent, --on-accent, --line, --line-strong, --grid-major,
+    --grid-minor, --surface, --surface-line, --glass;
+  transition-duration: var(--dur-theme);
+  transition-timing-function: var(--ease-ui);
+}
+html.motion-off {
+  transition: none;
+}

@@ -1,0 +1,46 @@
+/*
+ * Neue Plak brand font slot.
+ * Add the licensed .woff2 files to this folder with the file names below (or edit
+ * the names here), then rebuild. The build links this stylesheet only once at least
+ * one of these files exists. Until then the page uses the free fallbacks:
+ * Barlow Condensed for headlines and Jost for text.
+ */
+
+/* Text: Neue Plak (normal width) */
+@font-face {
+  font-family: 'Neue Plak';
+  src: local('Neue Plak Regular'), local('NeuePlak-Regular'), url('./NeuePlak-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Neue Plak';
+  src: local('Neue Plak SemiBold'), local('NeuePlak-SemiBold'), url('./NeuePlak-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Neue Plak';
+  src: local('Neue Plak Bold'), local('NeuePlak-Bold'), url('./NeuePlak-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Headlines: Neue Plak Condensed (heavy) */
+@font-face {
+  font-family: 'Neue Plak Condensed';
+  src: local('Neue Plak Condensed Bold'), local('NeuePlak-CondBold'), url('./NeuePlak-CondensedBold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Neue Plak Condensed';
+  src: local('Neue Plak Condensed Black'), local('NeuePlak-CondBlack'), url('./NeuePlak-CondensedBlack.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}

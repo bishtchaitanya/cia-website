@@ -1,0 +1,240 @@
+/* ── Projects ──────────────────────────────────────────────────────── */
+.work__stage {
+  padding-block: clamp(120px, 14vw, 200px) clamp(80px, 10vw, 140px);
+}
+.work__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px 48px;
+  margin-bottom: 48px;
+}
+.work__intro {
+  display: grid;
+  gap: 16px;
+}
+.work__intro .h2 {
+  font-size: clamp(56px, 6.6vw, 120px);
+}
+.work__progress {
+  display: none;
+}
+.work__viewport {
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.work__track {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: 24px;
+}
+
+/* Pinned: vertical scroll moves the track sideways. */
+.work.is-pinned .work__stage {
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: calc(var(--nav-h) + 28px) 0 28px;
+  /* clip, not hidden: a hidden box can still be scrolled by focus, which would
+     shift the track when a keyboard user tabs to an off-screen card. */
+  overflow: clip;
+}
+.work.is-pinned .work__head {
+  width: 100%;
+  margin-bottom: 32px;
+}
+.work.is-pinned .work__progress {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.work__bar {
+  position: relative;
+  width: 160px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--line);
+  overflow: hidden;
+}
+.work__bar span {
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+.work.is-pinned .work__viewport {
+  max-width: none;
+  margin: 0;
+  padding-inline: max(var(--gutter), calc((100% - var(--max)) / 2 + var(--gutter)));
+}
+.work.is-pinned .work__track {
+  display: flex;
+  width: max-content;
+  gap: 24px;
+  will-change: transform;
+}
+.work.is-pinned .project {
+  flex: none;
+  width: clamp(300px, 26vw, 420px);
+}
+@media (max-height: 820px) {
+  .work.is-pinned .work__intro .lede {
+    display: none;
+  }
+}
+
+/* Project card */
+.project__card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--surface-line);
+  overflow: hidden;
+  transition: transform 0.5s var(--ease-ui), box-shadow 0.5s var(--ease-ui);
+}
+.project__card:hover,
+.project__card:focus-within {
+  transform: translateY(-6px);
+  box-shadow: inset 0 0 0 1px var(--surface-line), var(--shadow-lift);
+}
+.project__cover {
+  aspect-ratio: 16 / 9;
+  margin: 8px 8px 0;
+  border-radius: calc(var(--radius-card) - 8px);
+  overflow: hidden;
+  background: var(--tint);
+}
+.project__cover .art {
+  width: 100%;
+  height: 100%;
+}
+.art .art-grow-y {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.art .art-grow-x,
+.art .art-pop {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+.project__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 20px 18px;
+}
+.project__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.project__year {
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.project__title {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  text-transform: uppercase;
+  font-size: clamp(30px, 2.4vw, 40px);
+  line-height: 0.92;
+}
+.project__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.project__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+.project__card--link {
+  position: relative;
+}
+.project__arrow {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+  transition: background-color 0.4s var(--ease-ui), color 0.4s var(--ease-ui);
+}
+.project__card--link:hover .project__arrow {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.project__summary {
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.project__impact {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.project__impact strong {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--fg);
+}
+.project__foot {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.project__methods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 0;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.project__methods li:not(:last-child)::after {
+  content: '·';
+  margin-inline: 7px;
+}
+.project__people {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: none;
+}
+.project__people li + li {
+  margin-left: -5px;
+}
+.project__person {
+  display: block;
+  border-radius: 50%;
+  transition: transform 0.3s var(--ease-ui);
+}
+.project__person:hover {
+  transform: translateY(-3px);
+}
+.project__person .avatar {
+  box-shadow: 0 0 0 2px #ffffff;
+}

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#F7F4F2" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!--app:head-->
+    <script>
+      // Runs before first paint: flags for JS, motion and the once-per-session loader.
+      (function () {
+        var root = document.documentElement;
+        root.classList.add('js');
+        var off =
+          /[?&]motion=off\b/.test(location.search) ||
+          (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+        root.classList.add(off ? 'motion-off' : 'motion-ok');
+        var seen = false;
+        try {
+          seen = sessionStorage.getItem('ciaLoaderSeen') === '1';
+        } catch (e) {}
+        if (off || seen || window.innerWidth < 800 || location.hash) root.classList.add('no-loader');
+      })();
+    </script>
+  </head>
+  <body>
+    <!--app:body-->
+    <script type="module" src="/src/js/main.js"></script>
+  </body>
+</html>
