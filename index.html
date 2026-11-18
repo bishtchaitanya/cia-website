@@ -3,11 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#F7F4F2" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.png" type="image/png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <!--app:head-->
     <script>
-      // Runs before first paint: flags for JS, motion and the once-per-session loader.
+      // Runs before first paint: flags for JS and motion. The loading globe is skipped with
+      // reduced motion and on deep links (#team), which should land without a wait.
       (function () {
         var root = document.documentElement;
         root.classList.add('js');
@@ -15,16 +18,13 @@
           /[?&]motion=off\b/.test(location.search) ||
           (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
         root.classList.add(off ? 'motion-off' : 'motion-ok');
-        var seen = false;
-        try {
-          seen = sessionStorage.getItem('ciaLoaderSeen') === '1';
-        } catch (e) {}
-        if (off || seen || window.innerWidth < 800 || location.hash) root.classList.add('no-loader');
+        if (off || location.hash) root.classList.add('no-loader');
       })();
     </script>
   </head>
   <body>
-    <!--app:body-->
-    <script type="module" src="/src/js/main.js"></script>
+    <div id="root"><!--app:body--></div>
+    <!--app:data-->
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

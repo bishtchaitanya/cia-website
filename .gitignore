@@ -1,0 +1,10 @@
+node_modules/
+dist/
+dist-next/
+dist-old/
+dist-next-*/
+dist-old-*/
+.admin-backups/
+.shots/
+*.log
+.DS_Store
