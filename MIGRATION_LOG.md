@@ -495,3 +495,26 @@ Made after the migration was complete, on the React code (so this is a change to
   reports are indented lists with CSS connectors, in the chart layout too; the chart's own SVG lines are drawn again when someone opens
   (`relayout()` in `motion/org.js`), and the highlight finds opened people in the page when it needs them. Directors and people without
   reports still open their profile when clicked.
+- **The landing page is two columns.** The right third holds the eyebrow, the headline (sized to fill that column by `initFit`, which needs the
+  headline's grid track capped with `minmax(0, 1fr)`: otherwise its unbroken lines widen the track and the fit measures the overflow), the intro and
+  the buttons; the left two thirds hold a "Hello <name>" greeting and `hero.kpis` from `about.json` (`div.hero__panel` > `p.hero__greeting` +
+  `<dl class="kpis">` in `sections/Hero.jsx`, "Key figures" in `styles/sections/intro.css`). (It was the other way round first: words left, figures
+  right; the user then asked for the greeting and the figures on the left, and "Total Pax" was dropped, so there are six figures, 3 + 3.) The words
+  stay first in the markup, so the headline is what a screen reader meets first; CSS `order` puts the panel on the left. Under 1024px the columns
+  stack, the words first, then the greeting and the figures (three to a row, then two on a phone, a last odd one across both).
+- **The landing page was then tuned to the user's own browser edits** (from a screenshot at about 1900px wide): a larger, bold greeting
+  (`clamp(30px, 3.75vw, 76px)`) with about 100px (`5.2vw`) between it and the figures; larger bold labels (`1.35vw`); boxes with more room above
+  the label and between label and figure, less under the figure; the two columns start at the same height (`align-items: start` with
+  `align-content: center`, so the pair is still centered on the screen); and the headline's last line is left-aligned, set in by `0.24em`,
+  not right-aligned.
+- **The header has a user area, a placeholder** (`components/UserMenu.jsx`): a bell, the name with a person icon, and Logout, in the black bar from
+  1025px, and the same three at the end of the opened menu below that (the bar has no room). The bell and Logout show an `info` note through
+  the toast system (`src/context/toasts.jsx`; `ToastRegion` on the 404 page too) saying they are not connected yet. The name comes from
+  `PLACEHOLDER_USER` in `src/utils/user.js`, which the greeting reads as well; replace it when sign-in (OAuth, IAM) exists. To fit it, the title's
+  size is a smaller clamp and `--portal-gutter` is narrower on narrow desktops.
+- **The landing page's figures are compact boxes** (a box is as tall as its label and figure, with the figure right under the label) and the
+  two columns are centered on the screen, so a tall window leaves space around them, not inside them. The headline is "Welcome to /
+  Customer Insights / & Analytics": the longest line sets the headline's size, so the opening words have a line of their own to keep it
+  large, and the last line is the one in the accent color. `initFit` (`motion/intro.js`) checks its first guess and takes the headline
+  back in if the line came out wider than the column. On a laptop screen the scroll hint is hidden so the whole page fits.
+
