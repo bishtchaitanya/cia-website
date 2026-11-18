@@ -28,6 +28,8 @@ The site needs no server code. To host it, copy `dist/` to any static host. All 
 
 **GitHub Pages.** Pushing to `main` deploys to `https://bishtchaitanya.github.io/cia-website/` (`.github/workflows/deploy.yml`). That build sets `BASE_PATH=/cia-website/`, which makes the paths absolute. GitHub serves `404.html` at whatever address was missing, at any depth, and only absolute paths load from there. If the address changes (a custom domain or a renamed repo), update `BASE_PATH` in the workflow and `site.url` in the content file.
 
+**Vercel.** [`vercel.json`](vercel.json) is all it needs: in Vercel choose "Add New… Project", import the repository and deploy. It installs with `npm ci`, builds with `npm run build` and publishes `dist/`. No environment variables are needed, and don't set `BASE_PATH`: Vercel sets `VERCEL=1` while it builds, and [`vite.config.js`](vite.config.js) then makes the paths absolute (base `/`). Like GitHub, Vercel serves `404.html` at whatever address was missing, and relative paths would leave the 404 page unstyled at any depth (`/no/such/page`). Vercel's Vite preset adds no catch-all rewrite, so a missing address gets the custom 404 page with a 404 status; don't add a rewrite to `index.html`. The file also sends `X-Content-Type-Options: nosniff` and lets browsers keep the hashed files in `/assets/` for a year. The old `dashboards.html` address still works (don't turn on `cleanUrls`). After the first deploy, set `site.url` to the address Vercel gives the site (the admin's "Website address", or `site.json`): the canonical link and link previews use it, and it must start with `https://` and end with `/`. Vercel picks its Node version from `engines` in `package.json` (20.19+ or 22.12+). A problem in the content stops the build with the same messages `npm run check` gives.
+
 ## Editing content
 
 1. In one terminal, run `npm run watch`. It rebuilds whenever you save.
@@ -99,7 +101,7 @@ Settings (environment variables): `PORT` (3001), `HOST` (127.0.0.1; use `0.0.0.0
 
 **Put HTTPS in front of it if it is reachable beyond your machine.** The server speaks plain HTTP; without HTTPS the password and the session cookie travel unencrypted. Behind a proxy that terminates HTTPS, set `TRUST_PROXY=1` so the cookie is marked secure.
 
-**The admin does not run on GitHub Pages**, which only hosts static files, and it is not part of the published site. Edits made on an admin server change that server's files. To publish them to GitHub Pages, commit the changed JSON files in `src/content/data/` and push.
+**The admin does not run on GitHub Pages or Vercel**, which only host static files (the admin is a Node server that writes files), and it is not part of the published site. Edits made on an admin server change that server's files. To publish them, commit the changed JSON files in `src/content/data/` and push: GitHub Pages and Vercel both rebuild on a push.
 
 `npm run test:admin` starts the server on a copy of the content and checks the password, the API, saving, the rebuild and the editor in a browser (49 checks). `npm run test:admin:dashboards` does the same for the Dashboard Management tab, and `npm run test:dashboards` for the dashboards data and the CSV importer.
 
@@ -187,6 +189,7 @@ src/utils/                    formatting, copying, page data, nav links
 src/styles/                   tokens, base, components, sections
 admin/                        the admin page: React (admin/src/), built into admin/dist/
 plugins/prerender.js          build-time rendering (index.html and 404.html)
+vercel.json                   Vercel: install and build commands, output folder, caching headers
 scripts/                      check, smoke test, screenshots, admin server and its tests
 public/fonts/ public/people/  brand font slot, optional photos
 public/brand/                 header globe mark, white logo (footer) and the link-preview image

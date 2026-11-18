@@ -9,9 +9,11 @@ const watching = process.argv.includes('--watch') || process.argv.includes('-w')
 
 export default defineConfig({
   // Relative asset paths by default, so the build works under any sub-path (e.g. the
-  // code-server proxy). The GitHub Pages deploy sets BASE_PATH=/cia-website/: GitHub serves
-  // 404.html at whatever URL was missing, and only absolute paths load from every depth.
-  base: process.env.BASE_PATH || './',
+  // code-server proxy). GitHub Pages and Vercel serve 404.html at whatever URL was missing,
+  // and only absolute paths load from every depth: the GitHub Pages deploy sets
+  // BASE_PATH=/cia-website/, and on Vercel (which sets VERCEL=1 while it builds) the site is
+  // at the root of its domain, so the base is '/'.
+  base: process.env.BASE_PATH || (process.env.VERCEL ? '/' : './'),
   // React (JSX, Fast Refresh in dev), then the build-time render of the pages.
   plugins: [react(), prerender()],
   build: {

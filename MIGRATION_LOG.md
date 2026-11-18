@@ -502,6 +502,14 @@ Made after the migration was complete, on the React code (so this is a change to
   right; the user then asked for the greeting and the figures on the left, and "Total Pax" was dropped, so there are six figures, 3 + 3.) The words
   stay first in the markup, so the headline is what a screen reader meets first; CSS `order` puts the panel on the left. Under 1024px the columns
   stack, the words first, then the greeting and the figures (three to a row, then two on a phone, a last odd one across both).
+- **Vercel deploy.** `vercel.json` (framework "vite", `npm ci`, `npm run build`, output `dist`, `nosniff` on everything, a year of caching for the
+  hashed files in `/assets/`) and one line in `vite.config.js`: `base` is `/` when `VERCEL` is set (Vercel sets it in its builds), `./` otherwise,
+  `BASE_PATH` still wins. The reason is the custom 404 page: Vercel, like GitHub Pages, serves `404.html` at the address that was missing, and
+  relative asset paths fail there at any depth (checked: at `/no/such/deep/page` the default build's 404 page loses its CSS, scripts and logo; the
+  `VERCEL=1` build keeps all of them). The Vite preset in `@vercel/frameworks` has no `defaultRoutes` (no catch-all rewrite to `index.html`), so
+  missing addresses still reach `404.html`; there is deliberately no `rewrites` in `vercel.json`, and no `cleanUrls`, so `/dashboards.html` still
+  redirects into the section. Not changed: `site.url` stays whatever `site.json` says (it feeds the canonical link and link previews), to be
+  set to the Vercel address after the first deploy. `vercel.json` was checked with Vercel's own `@vercel/routing-utils` and its published JSON schema.
 - **The landing page was then tuned to the user's own browser edits** (from a screenshot at about 1900px wide): a larger, bold greeting
   (`clamp(30px, 3.75vw, 76px)`) with about 100px (`5.2vw`) between it and the figures; larger bold labels (`1.35vw`); boxes with more room above
   the label and between label and figure, less under the figure; the two columns start at the same height (`align-items: start` with
